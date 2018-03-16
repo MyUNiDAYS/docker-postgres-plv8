@@ -2,23 +2,16 @@ after_script:
   - docker images
 
 before_script:
-  - IMAGE="postgres-plv8:$VERSION"
+  - IMAGE="postgres-plv8:$POSTGRES_VERSION-$PLV8"
 
 env:
-  - VERSION=9.4-1.4
-  - VERSION=9.4-1.5
-  - VERSION=9.4-2.0
-  - VERSION=9.5-1.4
-  - VERSION=9.5-1.5
-  - VERSION=9.5-2.0
-  - VERSION=9.6-1.4
-  - VERSION=9.6-1.5
-  - VERSION=9.6-2.0
+  - POSTGRES=9.5 POSTGRES_VERSION=9.5.2 PLV8=1.4.4
+
 
 language: bash
 
 script:
-  - docker build -t "${IMAGE}" "${VERSION}"
+  - docker build -t "${IMAGE}" "${POSTGRES}"
   - docker run -d --name postgres "${IMAGE}"
   - sleep 3
   - while ! docker exec -it postgres pg_isready -U postgres -h 127.0.0.1; do echo "$(date) - waiting for database to start"; sleep 1; done
