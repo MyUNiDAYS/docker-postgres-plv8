@@ -34,7 +34,7 @@ postgres:
 
 The `unidays/postgres-plv8` image comes in multiple flavors:
 
-### `clkao/postgres-plv8:<postgresVersion>-<plv8Version>`
+### `unidays/postgres-plv8:<postgresVersion>-<plv8Version>`
 
 Points to the latest release available of Postgres `<postgresVersion>` on AWS RDS with the latest release available of plv8 `<plv8Version>` installed.
 
