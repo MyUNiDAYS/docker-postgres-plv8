@@ -1,4 +1,4 @@
-FROM postgres:9.5.4
+FROM postgres:9.5.9
 
 LABEL Author="Chia-liang Kao <clkao@clkao.org>" 
 
