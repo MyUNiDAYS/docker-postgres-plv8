@@ -5,7 +5,7 @@ before_script:
   - IMAGE="postgres-plv8:$POSTGRES_VERSION-$PLV8"
 
 env:
-  - POSTGRES=9.5 POSTGRES_VERSION=9.5.6 PLV8=1.4.4
+  - POSTGRES=9.5 POSTGRES_VERSION=9.5.7 PLV8=1.4.4
 
 
 language: bash
