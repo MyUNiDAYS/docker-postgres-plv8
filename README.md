@@ -1,6 +1,6 @@
 # postgres-plv8
 
-Fork of [clkao/postgres-plv8](https://github.com/clkao/docker-postgres-plv8)
+Inspired by of [clkao/postgres-plv8](https://github.com/clkao/docker-postgres-plv8)
 
 
 Docker images for running [plv8](https://github.com/plv8/plv8) based on Amazon RDS support (9.3, 9.4, 9.5, 9.6, 10) using the RDS supported plv8 version as defined in the [AWS Docs](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html). Based on the [official Postgres image](http://registry.hub.docker.com/_/postgres/).
