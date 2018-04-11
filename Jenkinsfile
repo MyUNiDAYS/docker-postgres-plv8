@@ -12,13 +12,6 @@ def build_docker(postgres, postgres_version, plv8){
                 sh "docker build -t ${image} ${postgres}/${plv8}"
             }
 
-            stage("Test Image"){
-                sh "docker run -d --name postgres ${image}"
-                sh "sleep 3"
-                sh "while ! docker exec postgres pg_isready -U postgres -h 127.0.0.1; do echo 'waiting for database to start'; sleep 1; done"
-                sh 'docker exec postgres psql -U postgres -c CREATE EXTENSION plv8; DO $$ plv8.elog(WARNING, plv8.version) $$ LANGUAGE plv8 | grep "${VERSION#????}"'
-            }
-
             stage("Push Image"){
                 sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}"
                 sh "docker build -t ${tag} ${postgres}/${plv8}"
