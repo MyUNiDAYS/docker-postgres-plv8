@@ -21,7 +21,6 @@ RUN buildDependencies="build-essential \
   && cd /tmp/build/plv8-${PLV8_VERSION#?} \
   && make static \
   && make install \
-  && make installcheck \
   && strip /usr/lib/postgresql/${PG_MAJOR}/lib/plv8.so \
   && cd / \
   && apt-get clean \
