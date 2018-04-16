@@ -39,8 +39,8 @@ def build_docker(postgres, postgres_version, plv8){
 node("docker"){
     stage("Build Docker Containers for PLV8 - 1.4.4"){
         parallel(
-            "9.3.12": { build_docker("9.3", "9.3.12", "1.4.4") },
-            "9.4.7": { build_docker("9.4", "9.4.7", "1.4.4") },
+            "9.3.12": { build_docker("9.3", "9.3.14", "1.4.4") },
+            "9.4.7": { build_docker("9.4", "9.4.9", "1.4.4") },
             "9.5.10": { build_docker("9.5", "9.5.10", "1.4.4") },
         )        
     }

@@ -1,4 +1,4 @@
-FROM postgres:10.1
+FROM postgres:10.3
 
 LABEL Maintainer="Robert Davies <robert.davies@myunidays.com>" 
 
