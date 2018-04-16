@@ -10,6 +10,7 @@ RUN buildDependencies="build-essential \
     ca-certificates \
     curl \
     git-core \
+	python \
     postgresql-server-dev-$PG_MAJOR" \
   && apt-get update \
   && apt-get install -y --no-install-recommends ${buildDependencies} \
