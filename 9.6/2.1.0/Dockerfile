@@ -10,7 +10,12 @@ RUN buildDependencies="build-essential \
     ca-certificates \
     curl \
     git-core \
-    postgresql-server-dev-$PG_MAJOR" \
+    postgresql-server-dev-$PG_MAJOR \
+    python \
+    libc++-dev \
+    pkg-config \
+    openssh-client \
+    libssl-dev" \
   && apt-get update \
   && apt-get install -y --no-install-recommends ${buildDependencies} \
   && mkdir -p /tmp/build \

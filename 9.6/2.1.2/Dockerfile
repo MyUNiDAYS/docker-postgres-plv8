@@ -3,14 +3,20 @@ FROM postgres:9.6.15
 LABEL Maintainer="George Grinnell-Moore <george.grinnell-moore@myunidays.com>" 
 
 ENV PLV8_VERSION=v2.1.2 \
-    PLV8_SHASUM="47c43feb8f14624f1704616cdc19a2947662a54141cc15568c386f6aac608f23  v2.1.2.tar.gz"
+    PLV8_SHASUM="47c43feb8f14624f1704616cdc19a2947662a54141cc15568c386f6aac608f23  v2.1.2.tar.gz" \
+    GCLIENT_PY3=1
 
 
 RUN buildDependencies="build-essential \
     ca-certificates \
     curl \
     git-core \
-    postgresql-server-dev-$PG_MAJOR" \
+    postgresql-server-dev-$PG_MAJOR \
+    python \
+    libc++-dev \
+    pkg-config \
+    openssh-client \
+    libssl-dev" \
   && apt-get update \
   && apt-get install -y --no-install-recommends ${buildDependencies} \
   && mkdir -p /tmp/build \
@@ -20,6 +26,7 @@ RUN buildDependencies="build-essential \
   && tar -xzf /tmp/build/${PLV8_VERSION}.tar.gz -C /tmp/build/ \
   && cd /tmp/build/plv8-${PLV8_VERSION#?} \
   && make static \
+  && echo "Past static" \
   && make install \
   && strip /usr/lib/postgresql/${PG_MAJOR}/lib/plv8.so \
   && cd / \
