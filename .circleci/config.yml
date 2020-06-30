@@ -1,0 +1,48 @@
+version: 2.1
+
+orbs:
+  docker: circleci/docker@1.2.1
+
+jobs:
+  build-and-push_9-6-8_2-1-0:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: unidays/postgres-plv8
+          path: 9.6/2.1.0
+          tag: 9.6.8-2.1.0
+      - docker/push:
+          digest-path: /tmp/digest.txt
+          image: unidays/postgres-plv8
+          tag: 9.6.8-2.1.0
+      - run:
+          command: |
+            echo "Digest is $(</tmp/digest.txt)"
+  build-and-push_9-6-15_2-1-2:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: unidays/postgres-plv8
+          path: 9.6/2.1.2
+          tag: 9.6.15-2.1.2
+      - docker/push:
+          digest-path: /tmp/digest.txt
+          image: unidays/postgres-plv8
+          tag: 9.6.15-2.1.2
+      - run:
+          command: |
+            echo "Digest is $(</tmp/digest.txt)"
+
+workflows:
+  commit:
+    jobs:
+      - build-and-push_9-6-8_2-1-0
+      - build-and-push_9-6-15_2-1-2:
+          requires:
+            - build-and-push_9-6-8_2-1-0
