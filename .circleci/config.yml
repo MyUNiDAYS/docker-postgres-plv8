@@ -12,7 +12,7 @@ jobs:
       - docker/check
       - docker/build:
           image: unidays/postgres-plv8
-          path: docker-postgres-plv8/9.6/2.1.0
+          path: 9.6/2.1.0
           tag: 9.6.8-2.1.0
       - docker/push:
           digest-path: /tmp/digest.txt
@@ -29,7 +29,7 @@ jobs:
       - docker/check
       - docker/build:
           image: unidays/postgres-plv8
-          path: docker-postgres-plv8/9.6/2.1.2
+          path: 9.6/2.1.2
           tag: 9.6.15-2.1.2
       - docker/push:
           digest-path: /tmp/digest.txt
