@@ -33,9 +33,14 @@ postgres:
   image: public.ecr.aws/f3w3g2g6/docker-postgres-plv8:13.2-2.3.15
 ```
 ### Selecting A Version
-#### `public.ecr.aws/f3w3g2g6/docker-postgres-plv8:<postgresVersion>-<plv8Version>`
 
 Points to the latest release available of Postgres `<postgresVersion>` on AWS RDS with the latest release available of plv8 `<plv8Version>` installed.
+
+#### 9.*
+`unidays/postgres-plv8:<postgresVersion>-<plv8Version>`
+#### 13.*
+
+`public.ecr.aws/f3w3g2g6/docker-postgres-plv8:<postgresVersion>-<plv8Version>`
 
 ## License
 
