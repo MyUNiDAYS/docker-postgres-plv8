@@ -10,10 +10,20 @@ RUN buildDependencies="build-essential \
     ca-certificates \
     curl \
     git-core \
-	python3 \
+    python3 \
+    gpp \
+    cpp \
+    pkg-config \
+    apt-transport-https \
+    cmake \
+    libc++-dev \
+    libc++abi-dev \
     postgresql-server-dev-$PG_MAJOR" \
+  && runtimeDependencies="libc++1 \
+    libtinfo5 \
+    libc++abi1" \
   && apt-get update \
-  && apt-get install -y --no-install-recommends ${buildDependencies} \
+  && apt-get install -y --no-install-recommends ${buildDependencies} ${runtimeDependencies} \
   && mkdir -p /tmp/build \
   && curl -o /tmp/build/${PLV8_VERSION}.tar.gz -SL "https://github.com/plv8/plv8/archive/$PLV8_VERSION.tar.gz" \
   && cd /tmp/build \
@@ -28,6 +38,3 @@ RUN buildDependencies="build-essential \
   && apt-get remove -y  ${buildDependencies} \
   && apt-get autoremove -y \
   && rm -rf /tmp/build /var/lib/apt/lists/*
-
-
-    
