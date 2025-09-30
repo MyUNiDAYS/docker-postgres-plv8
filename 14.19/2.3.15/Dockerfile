@@ -11,6 +11,7 @@ RUN buildDependencies="build-essential \
     curl \
     git-core \
     python3 \
+    python-is-python3 \
     gpp \
     cpp \
     pkg-config \
@@ -20,10 +21,9 @@ RUN buildDependencies="build-essential \
     libc++abi-dev \
     postgresql-server-dev-$PG_MAJOR" \
   && runtimeDependencies="libc++1 \
-    libtinfo5 \
     libc++abi1" \
   && apt-get update \
-  && apt-get install -y --no-install-recommends ${buildDependencies} ${runtimeDependencies} \
+  && apt-get install -y --no-install-recommends ${buildDependencies}  \
   && mkdir -p /tmp/build \
   && curl -o /tmp/build/${PLV8_VERSION}.tar.gz -SL "https://github.com/plv8/plv8/archive/$PLV8_VERSION.tar.gz" \
   && cd /tmp/build \

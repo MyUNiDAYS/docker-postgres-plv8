@@ -10,7 +10,15 @@ RUN buildDependencies="build-essential \
     ca-certificates \
     curl \
     git-core \
-	python3 \
+    python3 \
+    python-is-python3 \
+    gpp \
+    cpp \
+    pkg-config \
+    apt-transport-https \
+    cmake \
+    libc++-dev \
+    libc++abi-dev \
     postgresql-server-dev-$PG_MAJOR" \
   && apt-get update \
   && apt-get install -y --no-install-recommends ${buildDependencies} \

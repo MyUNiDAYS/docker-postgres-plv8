@@ -52,3 +52,8 @@ workflows:
           name: build-and-push-14-19--2-3-15
           postgres_version: "14.19"
           plv8_version: "2.3.15"
+      - build-and-push-image:
+          context: aws-cf-deployment-dev
+          name: build-and-push-14-19--3-1-10
+          postgres_version: "14.19"
+          plv8_version: "3.1.10"
