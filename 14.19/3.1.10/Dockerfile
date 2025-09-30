@@ -1,9 +1,9 @@
-FROM postgres:14.10
+FROM postgres:14.19
 
-LABEL Maintainer="Robert Davies <robert.davies@myunidays.com>" 
+LABEL Maintainer="Platform Team <platform.team@myunidays.com>" 
 
-ENV PLV8_VERSION=v3.0.0 \
-    PLV8_SHASUM="b78b4e0e442c8a7d0c34c85b1b8c1c5e5c5f5c5f5c5f5c5f5c5f5c5f5c5f5c5f  v3.0.0.tar.gz"
+ENV PLV8_VERSION=v3.1.10 \
+    PLV8_SHASUM="7096c3290928561f0d4901b7a52794295dc47f6303102fae3f8e42dd575ad97d  v3.1.10.tar.gz"
 
 
 RUN buildDependencies="build-essential \
