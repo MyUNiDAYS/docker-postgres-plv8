@@ -18,15 +18,6 @@ jobs:
     steps:
       - checkout
       - aws-cli/setup
-      # - aws-ecr/ecr_login
-      # - run:
-      #     command: |
-      #       image_name = "postgres-plv8:<< parameters.postgres_version >>-<< parameters.plv8_version >>"
-      #       ecr_repo = "unidays/docker-postgres-plv8"
-      #       image_tag = "<< parameters.postgres_version >>-<< parameters.plv8_version >>"
-      #       docker build -t $image_tag << parameters.postgres_version >>/<< parameters.plv8_version >>
-      #       docker tag $image_tag $ecr_repo:$image_tag
-      #       docker push $ecr_repo
       - aws-ecr/build_and_push_image:
           account_id: ${AWS_ACCOUNT_ID}
           auth:
@@ -52,6 +43,11 @@ workflows:
           name: build-and-push-14-19--2-3-15
           postgres_version: "14.19"
           plv8_version: "2.3.15"
+      - build-and-push-image:
+          context: aws-cf-deployment-dev
+          name: build-and-push-15--3-2-4
+          postgres_version: "15"
+          plv8_version: "3.2.4"
       # - build-and-push-image:
       #     context: aws-cf-deployment-dev
       #     name: build-and-push-14-19--3-1-10
