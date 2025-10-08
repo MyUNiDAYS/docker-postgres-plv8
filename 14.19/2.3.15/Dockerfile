@@ -5,7 +5,10 @@ LABEL authors="Platform (platform.team@myunidays.com)"
 ENV PLV8_VERSION=2.3.15 \
     PLV8_SHA256SUM="8a05f9d609bb79e47b91ebc03ea63b3f7826fa421a0ee8221ee21581d68cb5ba"
 
-ENV GYP_CHROMIUM_NO_ACTION=0
+ENV GYP_CHROMIUM_NO_ACTION=0 \
+    PYTHON_DISALLOW_AMBIGUOUS_VERSION=0 \
+    DEPOT_TOOLS_UPDATE=0 \
+    VPYTHON_BYPASS="manually managed python not supported by chrome operations"
 
 RUN buildDependencies="build-essential \
     ca-certificates \
