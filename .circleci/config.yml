@@ -38,7 +38,7 @@ jobs:
           platform: linux/amd64
           public_registry: true
           public_registry_alias: unidays
-          push_image: false
+          push_image: true
           region: us-east-1
           repo: unidays/docker-postgres-plv8
           repo_scan_on_push: true
