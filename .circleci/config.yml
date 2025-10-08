@@ -40,7 +40,7 @@ jobs:
           public_registry_alias: unidays
           push_image: true
           region: us-east-1
-          repo: unidays/docker-postgres-plv8
+          repo: docker-postgres-plv8
           repo_scan_on_push: true
           tag: "<< parameters.postgres_version >>-<< parameters.plv8_version >>"
 
