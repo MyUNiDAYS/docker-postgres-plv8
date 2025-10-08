@@ -33,16 +33,10 @@ RUN buildDependencies="build-essential \
     libc++abi1" \
   && apt-get update \
   && apt-get install -y --no-install-recommends ${buildDependencies} ${runtimeDependencies} \
-  && cd /tmp \
-  && curl -O https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tgz \
-  && tar -xzf Python-2.7.18.tgz \
-  && cd Python-2.7.18 \
-  && ./configure \
-  && make -j1 \
-  && make altinstall \
-  && ln -s /usr/local/bin/python2.7 /usr/local/bin/python \
-  && cd /tmp \
-  && rm -rf Python-2.7.18* \
+  && echo "deb http://archive.debian.org/debian stretch main" >> /etc/apt/sources.list \
+  && apt-get update \
+  && apt-get install -y --no-install-recommends python2.7 python2.7-dev \
+  && ln -s /usr/bin/python2.7 /usr/local/bin/python \
   && git config --global user.email "some.user@test.com" \
   && git config --global user.name "someuser" \
   && apt-get install -y --no-install-recommends ${postSetupDeps} \
