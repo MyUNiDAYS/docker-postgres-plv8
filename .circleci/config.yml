@@ -15,6 +15,7 @@ jobs:
         default: "2.3.15"
     machine:
       image: ubuntu-2204:current
+    resource_class: xlarge
     steps:
       - checkout
       - aws-cli/setup
