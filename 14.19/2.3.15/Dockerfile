@@ -5,10 +5,7 @@ LABEL authors="Platform (platform.team@myunidays.com)"
 ENV PLV8_VERSION=2.3.15 \
     PLV8_SHA256SUM="8a05f9d609bb79e47b91ebc03ea63b3f7826fa421a0ee8221ee21581d68cb5ba"
 
-ENV GYP_CHROMIUM_NO_ACTION=0 \
-    PYTHON_DISALLOW_AMBIGUOUS_VERSION=0 \
-    DEPOT_TOOLS_UPDATE=0 \
-    VPYTHON_BYPASS="manually managed python not supported by chrome operations"
+ENV GYP_CHROMIUM_NO_ACTION=0
 
 RUN buildDependencies="build-essential \
     ca-certificates \
@@ -36,14 +33,16 @@ RUN buildDependencies="build-essential \
     libc++abi1" \
   && apt-get update \
   && apt-get install -y --no-install-recommends ${buildDependencies} ${runtimeDependencies} \
-  && echo "deb http://archive.debian.org/debian stretch main" >> /etc/apt/sources.list \
-  && apt-get update \
-  && apt-get install -y --no-install-recommends python2.7 python2.7-dev python-pip-whl \
-  && ln -s /usr/bin/python2.7 /usr/local/bin/python \
-  && curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py \
-  && python2.7 get-pip.py \
-  && pip2.7 install httplib2 \
-  && rm get-pip.py \
+  && cd /tmp \
+  && curl -O https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tgz \
+  && tar -xzf Python-2.7.18.tgz \
+  && cd Python-2.7.18 \
+  && ./configure --enable-optimizations \
+  && make -j$(nproc) \
+  && make altinstall \
+  && ln -s /usr/local/bin/python2.7 /usr/local/bin/python \
+  && cd /tmp \
+  && rm -rf Python-2.7.18* \
   && git config --global user.email "some.user@test.com" \
   && git config --global user.name "someuser" \
   && apt-get install -y --no-install-recommends ${postSetupDeps} \
