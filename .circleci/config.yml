@@ -19,15 +19,17 @@ jobs:
     steps:
       - checkout
       - aws-cli/setup
-      - aws-ecr/ecr_login
+      - aws-ecr/ecr_login:
+          public_registry: true
+          region: us-east-1
       - run:
           name: Build and push image
           command: |
             docker build . --platform=linux/amd64 -f << parameters.postgres_version >>/<< parameters.plv8_version >>/Dockerfile -t docker-postgres-plv8 --provenance=false --no-cache
-            docker tag docker-postgres-plv8:latest $AWS_ACCOUNT_ID.dkr.ecr.eu-west-1.amazonaws.com/docker-postgres-plv8:<< parameters.postgres_version >>-<< parameters.plv8_version >>
-            docker tag docker-postgres-plv8:latest $AWS_ACCOUNT_ID.dkr.ecr.eu-west-1.amazonaws.com/docker-postgres-plv8:${CIRCLE_SHA1:0:7}
-            docker push $AWS_ACCOUNT_ID.dkr.ecr.eu-west-1.amazonaws.com/docker-postgres-plv8:${CIRCLE_SHA1:0:7}
-            docker push $AWS_ACCOUNT_ID.dkr.ecr.eu-west-1.amazonaws.com/docker-postgres-plv8:<< parameters.postgres_version >>-<< parameters.plv8_version >>
+            docker tag docker-postgres-plv8:latest public.ecr.aws/unidays/docker-postgres-plv8:<< parameters.postgres_version >>-<< parameters.plv8_version >>
+            docker tag docker-postgres-plv8:latest public.ecr.aws/unidays/docker-postgres-plv8:${CIRCLE_SHA1:0:7}
+            docker push public.ecr.aws/unidays/docker-postgres-plv8:${CIRCLE_SHA1:0:7}
+            docker push public.ecr.aws/unidays/docker-postgres-plv8:<< parameters.postgres_version >>-<< parameters.plv8_version >>
       # - aws-ecr/build_and_push_image:
       #     account_id: ${AWS_ACCOUNT_ID}
       #     auth:
