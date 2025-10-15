@@ -6,10 +6,9 @@ ENV PLV8_VERSION=3.1.10 \
     PLV8_SHA256SUM="7096c3290928561f0d4901b7a52794295dc47f6303102fae3f8e42dd575ad97d"
 
 ENV GYP_CHROMIUM_NO_ACTION=0
-# ENV LC_ALL="en_US.utf8"
-# ENV LANGUAGE="en_US.utf8"
 
 RUN buildDependencies="build-essential \
+    ninja-build \
     ca-certificates \
     curl \
     git-core \
@@ -26,8 +25,7 @@ RUN buildDependencies="build-essential \
     zlib1g-dev \
     libffi-dev \
     linux-libc-dev \
-    clang-15 \
-    llvm-13 \
+    clang \
     llvm-15 \
     llvm-16 \
     make" \
@@ -46,8 +44,8 @@ RUN buildDependencies="build-essential \
   && echo $PLV8_SHA256SUM v$PLV8_VERSION.tar.gz | sha256sum -c \
   && tar -xzf /tmp/build/v$PLV8_VERSION.tar.gz -C /tmp/build/ \
   && cd /tmp/build/plv8-$PLV8_VERSION \
-  && make static \
-  && make install \
+  && make static DOCKER=1  \
+  && make install DOCKER=1 \
   && strip /usr/lib/postgresql/${PG_MAJOR}/lib/plv8-${PLV8_VERSION}.so \
   && rm -rf /root/.vpython_cipd_cache /root/.vpython-root \
   && apt-get clean \
