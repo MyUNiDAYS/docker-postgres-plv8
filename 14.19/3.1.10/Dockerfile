@@ -1,4 +1,4 @@
-FROM postgres:14.19-bookworm
+FROM postgres:14.9-bullseye
 
 LABEL authors="Platform Team (platform.team@myunidays.com)"
 
@@ -26,8 +26,7 @@ RUN buildDependencies="build-essential \
     libffi-dev \
     linux-libc-dev \
     clang \
-    llvm-15 \
-    llvm-16 \
+    llvm-11 \
     make" \
   && postSetupDeps="postgresql-server-dev-$PG_MAJOR" \
   && runtimeDependencies="libc++1 \
@@ -44,7 +43,9 @@ RUN buildDependencies="build-essential \
   && echo $PLV8_SHA256SUM v$PLV8_VERSION.tar.gz | sha256sum -c \
   && tar -xzf /tmp/build/v$PLV8_VERSION.tar.gz -C /tmp/build/ \
   && cd /tmp/build/plv8-$PLV8_VERSION \
-  && make static DOCKER=1  \
+  && export CC=gcc CXX=g++ \
+  && unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS \
+  && make static DOCKER=1 -j1 \
   && make install DOCKER=1 \
   && strip /usr/lib/postgresql/${PG_MAJOR}/lib/plv8-${PLV8_VERSION}.so \
   && rm -rf /root/.vpython_cipd_cache /root/.vpython-root \
