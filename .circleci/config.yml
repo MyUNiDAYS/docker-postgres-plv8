@@ -1,0 +1,67 @@
+version: 2.1
+
+orbs:
+  aws-cli: circleci/aws-cli@5.4.1
+  aws-ecr: circleci/aws-ecr@9.6.0
+
+jobs:
+  build-and-push-image:
+    parameters:
+      postgres_version:
+        type: string
+        default: "14.19"
+      plv8_version:
+        type: string
+        default: "2.3.15"
+    machine:
+      image: ubuntu-2204:current
+    resource_class: xlarge
+    steps:
+      - checkout
+      - aws-cli/setup
+      - aws-ecr/ecr_login:
+          public_registry: true
+          region: us-east-1
+      - run:
+          name: Build and push image
+          command: |
+            docker build . --platform=linux/amd64 -f << parameters.postgres_version >>/<< parameters.plv8_version >>/Dockerfile -t docker-postgres-plv8 --provenance=false --no-cache
+            docker tag docker-postgres-plv8:latest public.ecr.aws/unidays/docker-postgres-plv8:<< parameters.postgres_version >>-<< parameters.plv8_version >>
+            docker tag docker-postgres-plv8:latest public.ecr.aws/unidays/docker-postgres-plv8:${CIRCLE_SHA1:0:7}
+            docker push public.ecr.aws/unidays/docker-postgres-plv8:${CIRCLE_SHA1:0:7}
+            docker push public.ecr.aws/unidays/docker-postgres-plv8:<< parameters.postgres_version >>-<< parameters.plv8_version >>
+      # - aws-ecr/build_and_push_image:
+      #     account_id: ${AWS_ACCOUNT_ID}
+      #     auth:
+      #       - aws-cli/setup
+      #     create_repo: false
+      #     dockerfile: Dockerfile
+      #     no_output_timeout: 10m
+      #     path: << parameters.postgres_version >>/<< parameters.plv8_version >>
+      #     platform: linux/amd64,linux/arm64
+      #     public_registry: true
+      #     public_registry_alias: unidays
+      #     push_image: false
+      #     region: us-east-1
+      #     repo: docker-postgres-plv8
+      #     repo_scan_on_push: true
+      #     tag: "<< parameters.postgres_version >>-<< parameters.plv8_version >>"
+
+workflows:
+  build-images:
+    jobs:
+#      - build-and-push-image:
+#          context: aws-cf-deployment-dev
+#          name: build-and-push-14-19--2-3-15
+#          postgres_version: "14.19"
+#          plv8_version: "2.3.15"
+      - build-and-push-image:
+          context: aws-cf-deployment-dev
+          name: build-and-push-15--3-1-10
+          postgres_version: "15"
+          plv8_version: "3.1.10"
+#      - build-and-push-image:
+#          context: aws-cf-deployment-dev
+#          name: build-and-push-14-19--3-1-10
+#          postgres_version: "14.19"
+#          plv8_version: "3.1.10"
